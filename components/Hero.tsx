@@ -25,7 +25,7 @@ export default function Hero() {
       </div>
 
       {/* Text content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-start gap-10">
+      <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col items-start gap-7 md:gap-10">
         <AnimatePresence mode="wait">
           <motion.h1
             key={isBengali ? "bn" : "en"}
@@ -33,7 +33,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="flex flex-col gap-5"
+            className="flex flex-col gap-4 md:gap-5"
           >
             <span className="text-subhead font-[family-name:var(--font-geist)] font-normal text-text-muted">
               {isBengali ? "আমি" : "Hi, I’m"}
@@ -96,13 +96,13 @@ export default function Hero() {
                 : "Featured on"}
             </motion.p>
           </AnimatePresence>
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-5 md:gap-8">
             <div className="opacity-0 animate-[fadeSlideIn_0.6s_ease_0.3s_forwards]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/logo-npr.png"
                 alt="NPR"
-                className="h-10 w-auto"
+                className="h-8 md:h-10 w-auto"
               />
             </div>
             <a
@@ -115,7 +115,7 @@ export default function Hero() {
               <img
                 src="/logo-atc.png"
                 alt="NPR All Things Considered"
-                className="h-10 w-auto"
+                className="h-8 md:h-10 w-auto"
               />
             </a>
             <a
@@ -128,7 +128,7 @@ export default function Hero() {
               <img
                 src="/logo-shortwave.png"
                 alt="NPR Short Wave"
-                className="h-10 w-auto"
+                className="h-8 md:h-10 w-auto"
               />
             </a>
           </div>

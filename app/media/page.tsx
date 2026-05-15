@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 export default function MediaPage() {
   return (
     <main className="relative z-10 min-h-screen">
-      <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-24 pt-[22vh] pb-32">
-        <header className="mb-16 md:mb-20">
+      <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-24 pt-[14vh] md:pt-[22vh] pb-32">
+        <header className="mb-10 md:mb-20">
           <h1
             className="text-title font-normal text-text-primary leading-[1.05] opacity-0 animate-[fadeSlideIn_0.6s_ease_0.1s_forwards]"
           >

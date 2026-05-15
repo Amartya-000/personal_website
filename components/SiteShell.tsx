@@ -11,6 +11,7 @@ import {
 } from "react";
 import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
+import MobileNav from "@/components/MobileNav";
 import Logo from "@/components/Logo";
 import AudioProvider from "@/components/AudioProvider";
 import AudioToggle from "@/components/AudioToggle";
@@ -65,6 +66,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
           {children}
           <Logo />
           <Navbar />
+          <MobileNav />
           <AudioToggle ref={audioButtonRef} />
           <StickyCursor
             navRefs={navRefs}

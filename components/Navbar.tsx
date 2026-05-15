@@ -73,7 +73,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+    <nav className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50">
       <div className="glass rounded-full px-2 py-1.5 flex items-center gap-0.5">
         {NAV_ITEMS.map((item, i) => {
           const isInternal = item.href.startsWith("/");

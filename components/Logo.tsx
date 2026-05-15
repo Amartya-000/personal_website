@@ -12,7 +12,7 @@ export default function Logo() {
       onClick={toggle}
       aria-label={isBengali ? "Switch to English" : "Switch to Bengali"}
       aria-pressed={isBengali}
-      className={`fixed top-6 left-6 z-50 glass rounded-full w-9 h-9 grid place-items-center transition-colors duration-200 ${
+      className={`fixed top-[max(1.5rem,env(safe-area-inset-top))] left-[max(1.5rem,env(safe-area-inset-left))] z-50 glass rounded-full w-9 h-9 grid place-items-center transition-colors duration-200 ${
         isBengali ? "text-brand" : "text-text-primary hover:text-brand"
       }`}
     >
