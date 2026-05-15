@@ -73,7 +73,7 @@ export default function Hero({ isBengali }: HeroProps) {
               </>
             ) : (
               <>
-                <span className="text-text-primary">
+                <span className="text-text-secondary">
                   Computer science & computer engineering
                 </span>{" "}
                 student at Northeastern University.

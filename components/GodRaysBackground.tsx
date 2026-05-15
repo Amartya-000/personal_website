@@ -13,16 +13,16 @@ export default function GodRaysBackground() {
         colorBack="#050505"
         colorBloom="#ffffff"
         colors={["#ffffff40", "#ffffff80", "#ffffff55"]}
-        bloom={0.28}
-        intensity={0.68}
+        bloom={0.1792}
+        intensity={0.4352}
         density={0.24}
         spotty={0.38}
         midSize={0.2}
-        midIntensity={0.6}
+        midIntensity={0.384}
         speed={0.5}
         scale={1.25}
         offsetX={0}
-        offsetY={-0.55}
+        offsetY={-0.9}
         minPixelRatio={1}
         maxPixelCount={1_500_000}
       />
