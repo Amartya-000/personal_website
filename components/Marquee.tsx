@@ -3,10 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Asterisk } from "lucide-react";
-
-interface MarqueeProps {
-  isBengali: boolean;
-}
+import { useLang } from "@/components/SiteShell";
 
 const BASE_SPEED = 30; // px/sec
 const HOVER_SPEED = BASE_SPEED * 1.2;
@@ -51,7 +48,8 @@ function ItemGroup({
   );
 }
 
-export default function Marquee({ isBengali }: MarqueeProps) {
+export default function Marquee() {
+  const { isBengali } = useLang();
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
   const groupElRef = useRef<HTMLSpanElement | null>(null);

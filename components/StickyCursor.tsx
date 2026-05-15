@@ -6,12 +6,13 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 interface StickyCursorProps {
   navRefs: RefObject<(HTMLElement | null)[]>;
   audioRef: RefObject<HTMLElement | null>;
+  logoRef?: RefObject<HTMLElement | null>;
 }
 
 const CURSOR_SIZE = 20;
 const PADDING = 6;
 
-export default function StickyCursor({ navRefs, audioRef }: StickyCursorProps) {
+export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCursorProps) {
   const cursorRef = useRef<HTMLDivElement>(null);
   const isHovering = useRef(false);
   const hoveredEl = useRef<HTMLElement | null>(null);
@@ -39,8 +40,11 @@ export default function StickyCursor({ navRefs, audioRef }: StickyCursorProps) {
     if (audioRef.current) {
       els.push(audioRef.current);
     }
+    if (logoRef?.current) {
+      els.push(logoRef.current);
+    }
     return els;
-  }, [navRefs, audioRef]);
+  }, [navRefs, audioRef, logoRef]);
 
   useEffect(() => {
     document.body.style.cursor = "none";

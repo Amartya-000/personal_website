@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLang } from "@/components/SiteShell";
 
-interface HeroProps {
-  isBengali: boolean;
-}
-
-export default function Hero({ isBengali }: HeroProps) {
+export default function Hero() {
+  const { isBengali } = useLang();
   return (
     <section className="relative w-full min-h-screen flex items-start pt-[26vh] md:pt-[22vh] px-6 md:px-16 lg:px-24 overflow-hidden">
       {/* Portrait image — right side, shifted lower */}

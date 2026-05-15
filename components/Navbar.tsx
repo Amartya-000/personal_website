@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef, useEffect, type RefObject } from "react";
+import { useEffect } from "react";
+import Link from "next/link";
 import { Home, Code, Tv, Music, type LucideIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useLang, useNavRefs } from "@/components/SiteShell";
 
 interface NavItem {
   label: string;
@@ -12,10 +14,10 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Home", labelBn: "\u09B9\u09CB\u09AE", href: "#", icon: Home },
-  { label: "Work", labelBn: "\u0995\u09BE\u099C", href: "#work", icon: Code },
-  { label: "Media", labelBn: "\u09AE\u09BF\u09A1\u09BF\u09AF\u09BC\u09BE", href: "#media", icon: Tv },
-  { label: "Music", labelBn: "\u09B8\u0999\u09CD\u0997\u09C0\u09A4", href: "#music", icon: Music },
+  { label: "Home", labelBn: "হোম", href: "/", icon: Home },
+  { label: "Work", labelBn: "কাজ", href: "#work", icon: Code },
+  { label: "Media", labelBn: "মিডিয়া", href: "/media", icon: Tv },
+  { label: "Music", labelBn: "সঙ্গীত", href: "#music", icon: Music },
 ];
 
 const LinkedInIcon = (
@@ -54,43 +56,28 @@ const SOCIALS = [
   },
 ];
 
-interface NavbarProps {
-  isBengali: boolean;
-  onToggleBengali: () => void;
-  stickyRefs?: RefObject<(HTMLElement | null)[]>;
-}
+const NAV_ITEM_CLASS =
+  "px-3 md:px-4 py-1.5 text-caption font-normal text-text-secondary hover:text-brand rounded-full transition-colors duration-200 flex items-center gap-1.5";
 
-export default function Navbar({
-  isBengali,
-  onToggleBengali,
-  stickyRefs,
-}: NavbarProps) {
-  const itemRefs = useRef<(HTMLElement | null)[]>([]);
+export default function Navbar() {
+  const { isBengali, toggle } = useLang();
+  const { navRefs } = useNavRefs();
 
   useEffect(() => {
-    if (stickyRefs?.current) {
-      stickyRefs.current = itemRefs.current;
-    }
+    // Keep refs array sized to current item count
+    navRefs.current.length = NAV_ITEMS.length + SOCIALS.length;
   });
 
   const setRef = (index: number) => (el: HTMLElement | null) => {
-    itemRefs.current[index] = el;
-    if (stickyRefs?.current) {
-      stickyRefs.current[index] = el;
-    }
+    navRefs.current[index] = el;
   };
 
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
       <div className="glass rounded-full px-2 py-1.5 flex items-center gap-0.5">
-        {NAV_ITEMS.map((item, i) => (
-          <a
-            key={item.label}
-            ref={setRef(i)}
-            href={item.href}
-            className="px-3 md:px-4 py-1.5 text-caption font-normal text-text-secondary hover:text-brand rounded-full transition-colors duration-200 flex items-center gap-1.5"
-          >
-            <item.icon size={13} strokeWidth={1.5} className="opacity-50" />
+        {NAV_ITEMS.map((item, i) => {
+          const isInternal = item.href.startsWith("/");
+          const label = (
             <AnimatePresence mode="wait">
               <motion.span
                 key={isBengali ? item.labelBn : item.label}
@@ -102,8 +89,31 @@ export default function Navbar({
                 {isBengali ? item.labelBn : item.label}
               </motion.span>
             </AnimatePresence>
-          </a>
-        ))}
+          );
+          const icon = <item.icon size={13} strokeWidth={1.5} className="opacity-50" />;
+
+          return isInternal ? (
+            <Link
+              key={item.label}
+              ref={setRef(i)}
+              href={item.href}
+              className={NAV_ITEM_CLASS}
+            >
+              {icon}
+              {label}
+            </Link>
+          ) : (
+            <a
+              key={item.label}
+              ref={setRef(i)}
+              href={item.href}
+              className={NAV_ITEM_CLASS}
+            >
+              {icon}
+              {label}
+            </a>
+          );
+        })}
 
         <div className="w-px h-5 bg-surface-3 mx-0.5" />
 
@@ -120,21 +130,6 @@ export default function Navbar({
             {social.icon}
           </a>
         ))}
-
-        <div className="w-px h-5 bg-surface-3 mx-0.5" />
-
-        <button
-          ref={setRef(NAV_ITEMS.length + SOCIALS.length)}
-          onClick={onToggleBengali}
-          aria-label={isBengali ? "Switch to English" : "Switch to Bengali"}
-          className={`px-2.5 py-1 rounded-full transition-colors duration-200 text-caption leading-none hover:text-brand ${
-            isBengali ? "text-brand" : "text-text-secondary"
-          }`}
-        >
-          <span className="font-[family-name:var(--font-libre-baskerville)] italic">
-            {isBengali ? "En" : "\u09AC"}
-          </span>
-        </button>
       </div>
     </nav>
   );
