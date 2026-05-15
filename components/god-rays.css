@@ -10,7 +10,7 @@
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse at 50% -20%,
+    ellipse at 85% -20%,
     rgba(255, 255, 255, 0.24),
     rgba(255, 255, 255, 0.08) 28%,
     transparent 52%

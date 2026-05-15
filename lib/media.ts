@@ -6,11 +6,32 @@ export type MediaItem = {
   href: string;
   image: string;
   imageAlt: string;
+  imageMode?: "cover" | "logo";
 };
 
 const PLACEHOLDER = "/media/placeholder.svg";
 
 export const MEDIA_ITEMS: MediaItem[] = [
+  {
+    id: "npr-shortwave",
+    eyebrow: "NPR · Short Wave",
+    title: "Untitled segment",
+    subtitle: "Featured on NPR's daily science podcast.",
+    href: "https://www.npr.org/podcasts/510351/short-wave",
+    image: "/logo-shortwave.png",
+    imageAlt: "NPR Short Wave logo",
+    imageMode: "logo",
+  },
+  {
+    id: "npr-atc",
+    eyebrow: "NPR · All Things Considered",
+    title: "Untitled segment",
+    subtitle: "Featured on NPR's evening news magazine.",
+    href: "https://www.npr.org/programs/all-things-considered",
+    image: "/logo-atc.png",
+    imageAlt: "NPR All Things Considered logo",
+    imageMode: "logo",
+  },
   {
     id: "lecture",
     eyebrow: "Lecture",
@@ -19,24 +40,6 @@ export const MEDIA_ITEMS: MediaItem[] = [
     href: "#",
     image: PLACEHOLDER,
     imageAlt: "Lecture cover",
-  },
-  {
-    id: "npr-atc",
-    eyebrow: "NPR · All Things Considered",
-    title: "Untitled segment",
-    subtitle: "Featured on NPR's evening news magazine.",
-    href: "https://www.npr.org/programs/all-things-considered",
-    image: PLACEHOLDER,
-    imageAlt: "NPR All Things Considered cover",
-  },
-  {
-    id: "npr-shortwave",
-    eyebrow: "NPR · Short Wave",
-    title: "Untitled segment",
-    subtitle: "Featured on NPR's daily science podcast.",
-    href: "https://www.npr.org/podcasts/510351/short-wave",
-    image: PLACEHOLDER,
-    imageAlt: "NPR Short Wave cover",
   },
   {
     id: "bioengineer",

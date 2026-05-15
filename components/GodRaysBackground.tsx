@@ -21,7 +21,7 @@ export default function GodRaysBackground() {
         midIntensity={0.384}
         speed={0.5}
         scale={1.25}
-        offsetX={0}
+        offsetX={0.7}
         offsetY={-0.9}
         minPixelRatio={1}
         maxPixelCount={1_500_000}

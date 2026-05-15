@@ -34,7 +34,11 @@ export default function MediaCard({ item, priority }: MediaCardProps) {
           fill
           priority={priority}
           sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
-          className="object-cover transition-transform duration-[400ms] ease-out group-hover:scale-[1.03]"
+          className={
+            item.imageMode === "logo"
+              ? "object-contain p-10 md:p-12 transition-transform duration-[400ms] ease-out group-hover:scale-[1.03]"
+              : "object-cover transition-transform duration-[400ms] ease-out group-hover:scale-[1.03]"
+          }
         />
       </div>
 
