@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="hidden md:block absolute right-[6%] lg:right-[10%] top-[58%] -translate-y-1/2 z-0">
         <div className="relative w-[34vw] max-w-[500px] min-w-[320px] aspect-[5/6] rounded-2xl overflow-hidden">
           <Image
-            src="/amartya.jpg"
+            src="/amartya.png"
             alt="Amartya Bhattacharya"
             fill
             priority
