@@ -11,18 +11,18 @@ export default function Hero({ isBengali }: HeroProps) {
   return (
     <section className="relative w-full min-h-screen flex items-start pt-[26vh] md:pt-[22vh] px-6 md:px-16 lg:px-24 overflow-hidden">
       {/* Portrait image — right side, shifted lower */}
-      <div className="hidden md:block absolute right-[6%] lg:right-[10%] top-[55%] -translate-y-1/2 z-0">
-        <div className="relative w-[32vw] max-w-[460px] min-w-[300px] aspect-[3/4] rounded-2xl overflow-hidden">
+      <div className="hidden md:block absolute right-[6%] lg:right-[10%] top-[58%] -translate-y-1/2 z-0">
+        <div className="relative w-[34vw] max-w-[500px] min-w-[320px] aspect-[5/6] rounded-2xl overflow-hidden">
           <Image
             src="/amartya.jpg"
             alt="Amartya Bhattacharya"
             fill
             priority
             className="object-cover"
-            sizes="32vw"
+            sizes="34vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0b0a] via-transparent to-transparent opacity-60" />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#0a0b0a] opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface-0 via-transparent to-transparent opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-surface-0 opacity-20" />
         </div>
       </div>
 
@@ -37,24 +37,52 @@ export default function Hero({ isBengali }: HeroProps) {
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="flex flex-col gap-5"
           >
-            <span className="text-2xl sm:text-3xl lg:text-5xl font-[family-name:var(--font-geist)] font-normal text-[#3a3c3a]">
-              {isBengali ? "\u0986\u09AE\u09BF" : "Hi, I\u2019m"}
+            <span className="text-subhead font-[family-name:var(--font-geist)] font-normal text-text-muted">
+              {isBengali ? "আমি" : "Hi, I’m"}
             </span>
-            <span className="relative text-5xl sm:text-7xl lg:text-9xl font-[family-name:var(--font-libre-baskerville)] italic">
+            <span className="relative inline-block text-display font-[family-name:var(--font-libre-baskerville)] italic leading-[0.95]">
+              <span className="relative text-text-primary">
+                {isBengali ? "অমৃত্য" : "Amartya"}
+              </span>
               <span
                 aria-hidden="true"
-                className="absolute top-[3px] left-[2px] lg:top-[5px] lg:left-[4px] text-[#4CAF50]/70 select-none"
+                className="absolute inset-0 amartya-shine select-none"
               >
-                {isBengali ? "\u0985\u09AE\u09C3\u09A4\u09CD\u09AF" : "Amartya"}
-              </span>
-              <span className="relative text-white">
-                {isBengali ? "\u0985\u09AE\u09C3\u09A4\u09CD\u09AF" : "Amartya"}
+                {isBengali ? "অমৃত্য" : "Amartya"}
               </span>
             </span>
           </motion.h1>
         </AnimatePresence>
 
-        {/* NPR Appearances */}
+        {/* Subheader */}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={isBengali ? "sub-bn" : "sub-en"}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="text-body text-text-muted max-w-xl leading-relaxed font-normal -mt-2 text-balance"
+          >
+            {isBengali ? (
+              <>
+                <span className="text-text-primary">
+                  কম্পিউটার সায়েন্স ও কম্পিউটার ইঞ্জিনিয়ারিং
+                </span>{" "}
+                ছাত্র, নর্থইস্টার্ন ইউনিভার্সিটি।
+              </>
+            ) : (
+              <>
+                <span className="text-text-primary">
+                  Computer science & computer engineering
+                </span>{" "}
+                student at Northeastern University.
+              </>
+            )}
+          </motion.p>
+        </AnimatePresence>
+
+        {/* Featured On */}
         <div className="flex flex-col gap-4">
           <AnimatePresence mode="wait">
             <motion.p
@@ -63,27 +91,22 @@ export default function Hero({ isBengali }: HeroProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="text-xs uppercase tracking-[0.2em] text-[#525452] font-normal"
+              className="text-caption uppercase tracking-[0.2em] text-text-muted font-normal"
             >
               {isBengali
-                ? "\u09AF\u09C7\u0996\u09BE\u09A8\u09C7 \u09AB\u09BF\u099A\u09BE\u09B0\u09CD\u09A1"
-                : "As featured on"}
+                ? "যেখানে ফিচার্ড"
+                : "Featured on"}
             </motion.p>
           </AnimatePresence>
           <div className="flex items-center gap-8">
-            <a
-              href="https://www.npr.org/podcasts/510351/short-wave"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="opacity-0 animate-[fadeSlideIn_0.6s_ease_0.3s_forwards]"
-            >
+            <div className="opacity-0 animate-[fadeSlideIn_0.6s_ease_0.3s_forwards]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo-shortwave.png"
-                alt="NPR Short Wave"
+                src="/logo-npr.png"
+                alt="NPR"
                 className="h-10 w-auto"
               />
-            </a>
+            </div>
             <a
               href="https://www.npr.org/programs/all-things-considered"
               target="_blank"
@@ -97,14 +120,19 @@ export default function Hero({ isBengali }: HeroProps) {
                 className="h-10 w-auto"
               />
             </a>
-            <div className="opacity-0 animate-[fadeSlideIn_0.6s_ease_0.7s_forwards]">
+            <a
+              href="https://www.npr.org/podcasts/510351/short-wave"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-0 animate-[fadeSlideIn_0.6s_ease_0.7s_forwards]"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo-npr.png"
-                alt="NPR"
+                src="/logo-shortwave.png"
+                alt="NPR Short Wave"
                 className="h-10 w-auto"
               />
-            </div>
+            </a>
           </div>
         </div>
       </div>

@@ -7,11 +7,17 @@
   --color-surface-3: #262826;
   --color-text-primary: #e5e6e5;
   --color-text-secondary: #a3a5a3;
-  --color-text-tertiary: #525452;
+  --color-text-muted: #8e918e;
   --color-brand: #4caf50;
   --color-brand-muted: rgba(76, 175, 80, 0.15);
   --font-sans: var(--font-geist);
   --font-serif: var(--font-libre-baskerville);
+
+  --text-caption: clamp(0.6875rem, 0.66rem + 0.15vw, 0.75rem);
+  --text-body: clamp(0.9375rem, 0.85rem + 0.4vw, 1.0625rem);
+  --text-subhead: clamp(1.5rem, 0.9rem + 3vw, 2.75rem);
+  --text-title: clamp(1.75rem, 1.25rem + 7.5vw, 4rem);
+  --text-display: clamp(2.5rem, 1.5rem + 15vw, 6rem);
 }
 
 body {
@@ -43,6 +49,45 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.amartya-shine {
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(76, 175, 80, 0.5) 45%,
+    rgba(76, 175, 80, 1) 50%,
+    rgba(76, 175, 80, 0.5) 55%,
+    transparent 65%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-position: 130% 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  pointer-events: none;
+  animation: amartya-shimmer 7s cubic-bezier(0.45, 0.05, 0.4, 0.95) infinite;
+}
+
+@keyframes amartya-shimmer {
+  0% {
+    background-position: 130% 0;
+  }
+  22% {
+    background-position: -30% 0;
+  }
+  100% {
+    background-position: -30% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .amartya-shine {
+    animation: none;
   }
 }
 

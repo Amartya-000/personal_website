@@ -9,8 +9,8 @@ import Navbar from "@/components/Navbar";
 import AudioToggle from "@/components/AudioToggle";
 import StickyCursor from "@/components/StickyCursor";
 
-const ParticleBackground = dynamic(
-  () => import("@/components/ParticleBackground"),
+const GodRaysBackground = dynamic(
+  () => import("@/components/GodRaysBackground"),
   { ssr: false }
 );
 
@@ -22,15 +22,15 @@ export default function Home() {
   return (
     <AudioProvider>
       <div className="fixed inset-0 -z-10">
-        <ParticleBackground />
+        <GodRaysBackground />
       </div>
 
       <main className="relative z-10">
         <div className="relative min-h-screen">
           <Hero isBengali={isBengali} />
 
-          {/* Marquee — positioned at bottom of image area, overlapping */}
-          <div className="absolute bottom-[12%] md:bottom-[16%] left-0 right-0 z-20">
+          {/* Marquee — sits low on the page; no z-index so mix-blend can reach Hero/portrait behind it */}
+          <div className="absolute bottom-[8%] md:bottom-[10%] left-0 right-0">
             <Marquee isBengali={isBengali} />
           </div>
         </div>

@@ -88,7 +88,7 @@ export default function Navbar({
             key={item.label}
             ref={setRef(i)}
             href={item.href}
-            className="px-3 md:px-4 py-1.5 text-xs md:text-sm font-normal text-[#a3a5a3] rounded-full transition-colors duration-200 flex items-center gap-1.5"
+            className="px-3 md:px-4 py-1.5 text-caption font-normal text-text-secondary hover:text-brand rounded-full transition-colors duration-200 flex items-center gap-1.5"
           >
             <item.icon size={13} strokeWidth={1.5} className="opacity-50" />
             <AnimatePresence mode="wait">
@@ -105,7 +105,7 @@ export default function Navbar({
           </a>
         ))}
 
-        <div className="w-px h-5 bg-[#262826] mx-0.5" />
+        <div className="w-px h-5 bg-surface-3 mx-0.5" />
 
         {SOCIALS.map((social, i) => (
           <a
@@ -115,24 +115,24 @@ export default function Navbar({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={social.label}
-            className="p-2 text-[#a3a5a3] rounded-full transition-colors duration-200"
+            className="p-2 text-text-secondary hover:text-brand rounded-full transition-colors duration-200"
           >
             {social.icon}
           </a>
         ))}
 
-        <div className="w-px h-5 bg-[#262826] mx-0.5" />
+        <div className="w-px h-5 bg-surface-3 mx-0.5" />
 
         <button
           ref={setRef(NAV_ITEMS.length + SOCIALS.length)}
           onClick={onToggleBengali}
           aria-label={isBengali ? "Switch to English" : "Switch to Bengali"}
-          className={`p-2 rounded-full transition-colors duration-200 text-base leading-none ${
-            isBengali ? "text-[#4CAF50]" : "text-[#a3a5a3]"
+          className={`px-2.5 py-1 rounded-full transition-colors duration-200 text-caption leading-none hover:text-brand ${
+            isBengali ? "text-brand" : "text-text-secondary"
           }`}
         >
-          <span className="font-[family-name:var(--font-libre-baskerville)]">
-            {"\u09AC"}
+          <span className="font-[family-name:var(--font-libre-baskerville)] italic">
+            {isBengali ? "En" : "\u09AC"}
           </span>
         </button>
       </div>

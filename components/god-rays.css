@@ -1,0 +1,53 @@
+.god-rays-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #050505;
+}
+
+.god-rays-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% -20%,
+    rgba(255, 255, 255, 0.24),
+    rgba(255, 255, 255, 0.08) 28%,
+    transparent 52%
+  );
+}
+
+.god-rays-depth-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.2) 48%,
+    rgba(0, 0, 0, 0.78) 100%
+  );
+}
+
+.god-rays-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  mix-blend-mode: screen;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.32) 0px,
+    rgba(255, 255, 255, 0.32) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.god-rays-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 28%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+}

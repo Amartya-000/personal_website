@@ -1,63 +1,134 @@
 "use client";
 
-import FastMarquee from "react-fast-marquee";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Asterisk } from "lucide-react";
 
 interface MarqueeProps {
   isBengali: boolean;
 }
 
-function EnglishText() {
-  const secondary = "text-white";
-  const highlight =
-    "text-white font-[family-name:var(--font-libre-baskerville)] italic";
+const BASE_SPEED = 30; // px/sec
+const HOVER_SPEED = BASE_SPEED * 1.2;
 
+const ENGLISH_ITEMS = ["Machine Learning", "DSP", "Audio", "& More"];
+const BENGALI_ITEMS = ["মেশিন লার্নিং", "DSP", "অডিও", "ও আরও"];
+
+function Separator() {
   return (
-    <span className={`text-3xl md:text-5xl lg:text-7xl font-[family-name:var(--font-geist)] font-normal tracking-[0.02em] mx-20 md:mx-32 whitespace-nowrap ${secondary}`}>
-      I&apos;m a{" "}
-      <span className={highlight}>computer science</span> and{" "}
-      <span className={highlight}>computer engineering</span> student at
-      Northeastern interested in the intersection of{" "}
-      <span className={highlight}>Machine Learning</span>,{" "}
-      <span className={highlight}>DSP</span>, and{" "}
-      <span className={highlight}>Audio</span>.
-    </span>
+    <Asterisk
+      size={28}
+      strokeWidth={1.25}
+      className="mx-6 md:mx-10 inline-block shrink-0"
+      aria-hidden="true"
+    />
   );
 }
 
-function BengaliText() {
-  const secondary = "text-white";
-  const highlight =
-    "text-white font-[family-name:var(--font-libre-baskerville)] italic";
-
+function ItemGroup({
+  isBengali,
+  ariaHidden,
+  groupRef,
+}: {
+  isBengali: boolean;
+  ariaHidden?: boolean;
+  groupRef?: (el: HTMLSpanElement | null) => void;
+}) {
+  const items = isBengali ? BENGALI_ITEMS : ENGLISH_ITEMS;
   return (
-    <span className={`text-3xl md:text-5xl lg:text-7xl font-[family-name:var(--font-geist)] font-normal tracking-[0.02em] mx-20 md:mx-32 whitespace-nowrap ${secondary}`}>
-      {"\u0986\u09AE\u09BF \u09A8\u09B0\u09CD\u09A5\u0987\u09B8\u09CD\u099F\u09BE\u09B0\u09CD\u09A8\u09C7 "}
-      <span className={highlight}>
-        {"\u0995\u09AE\u09CD\u09AA\u09BF\u0989\u099F\u09BE\u09B0 \u09B8\u09BE\u09AF\u09BC\u09C7\u09A8\u09CD\u09B8"}
-      </span>
-      {" \u0993 "}
-      <span className={highlight}>
-        {"\u0995\u09AE\u09CD\u09AA\u09BF\u0989\u099F\u09BE\u09B0 \u0987\u099E\u09CD\u099C\u09BF\u09A8\u09BF\u09AF\u09BC\u09BE\u09B0\u09BF\u0982"}
-      </span>
-      {"\u09AF\u09BC\u09C7\u09B0 \u099B\u09BE\u09A4\u09CD\u09B0 \u2014 "}
-      <span className={highlight}>
-        {"\u09AE\u09C7\u09B6\u09BF\u09A8 \u09B2\u09BE\u09B0\u09CD\u09A8\u09BF\u0982"}
-      </span>
-      {", "}
-      <span className={highlight}>DSP</span>
-      {", \u098F\u09AC\u0982 "}
-      <span className={highlight}>
-        {"\u0985\u09A1\u09BF\u0993"}
-      </span>
-      {"\u09B0 \u09B8\u0982\u09AF\u09CB\u0997\u09B8\u09CD\u09A5\u09B2\u09C7 \u0986\u0997\u09CD\u09B0\u09B9\u09C0\u0964"}
+    <span
+      ref={groupRef}
+      aria-hidden={ariaHidden}
+      className="text-title font-[family-name:var(--font-libre-baskerville)] italic text-text-secondary inline-flex items-center shrink-0"
+    >
+      {items.map((label, i) => (
+        <span key={i} className="inline-flex items-center">
+          {label}
+          <Separator />
+        </span>
+      ))}
     </span>
   );
 }
 
 export default function Marquee({ isBengali }: MarqueeProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const groupElRef = useRef<HTMLSpanElement | null>(null);
+  const targetSpeedRef = useRef(BASE_SPEED);
+  const speedRef = useRef(BASE_SPEED);
+  const translateRef = useRef(0);
+  const [copyCount, setCopyCount] = useState(3);
+
+  const setTrackRef = (el: HTMLDivElement | null) => {
+    trackRef.current = el;
+  };
+  const setGroupRef = (el: HTMLSpanElement | null) => {
+    groupElRef.current = el;
+  };
+
+  useEffect(() => {
+    let raf = 0;
+    let lastTime = performance.now();
+
+    const tick = (now: number) => {
+      const dt = Math.min(now - lastTime, 100);
+      lastTime = now;
+
+      speedRef.current += (targetSpeedRef.current - speedRef.current) * 0.06;
+
+      const group = groupElRef.current;
+      const track = trackRef.current;
+      if (group && track) {
+        const groupW = group.offsetWidth;
+        translateRef.current -= (speedRef.current * dt) / 1000;
+        if (groupW > 0) {
+          while (-translateRef.current >= groupW) {
+            translateRef.current += groupW;
+          }
+        }
+        track.style.transform = `translate3d(${translateRef.current}px, 0, 0)`;
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    const group = groupElRef.current;
+    if (!container || !group) return;
+
+    const measure = () => {
+      const containerW = container.offsetWidth;
+      const groupW = group.offsetWidth;
+      if (groupW > 0 && containerW > 0) {
+        setCopyCount(Math.ceil(containerW / groupW) + 2);
+      }
+    };
+    measure();
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(container);
+    ro.observe(group);
+
+    return () => ro.disconnect();
+  }, [isBengali]);
+
   return (
-    <div className="w-full select-none pointer-events-none py-4 [&_.rfm-overlay]:hidden">
+    <div
+      ref={containerRef}
+      className="w-full select-none py-4 mix-blend-difference overflow-hidden"
+      onMouseEnter={() => {
+        targetSpeedRef.current = HOVER_SPEED;
+      }}
+      onMouseLeave={() => {
+        targetSpeedRef.current = BASE_SPEED;
+      }}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={isBengali ? "bn" : "en"}
@@ -66,9 +137,15 @@ export default function Marquee({ isBengali }: MarqueeProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <FastMarquee speed={30} gradient={false} autoFill>
-            {isBengali ? <BengaliText /> : <EnglishText />}
-          </FastMarquee>
+          <div
+            ref={setTrackRef}
+            className="flex whitespace-nowrap will-change-transform"
+          >
+            <ItemGroup isBengali={isBengali} groupRef={setGroupRef} />
+            {Array.from({ length: copyCount - 1 }, (_, i) => (
+              <ItemGroup key={i} isBengali={isBengali} ariaHidden />
+            ))}
+          </div>
         </motion.div>
       </AnimatePresence>
     </div>

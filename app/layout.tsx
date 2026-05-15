@@ -12,7 +12,7 @@ const geist = Geist({
 const libreBaskerville = Libre_Baskerville({
   variable: "--font-libre-baskerville",
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["400"],
   style: ["normal", "italic"],
 });
 
@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="en"
       className={`${geist.variable} ${libreBaskerville.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#0a0b0a] text-[#e5e6e5] font-[family-name:var(--font-geist)]">
+      <body className="min-h-full bg-surface-0 text-text-primary font-[family-name:var(--font-geist)]">
         {children}
       </body>
     </html>
