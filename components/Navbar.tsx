@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Home, Code, Tv, Music, type LucideIcon } from "lucide-react";
+import { Home, User, Code, Tv, Music, type LucideIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLang, useNavRefs } from "@/components/SiteShell";
 
@@ -15,7 +15,8 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Home", labelBn: "হোম", href: "/", icon: Home },
-  { label: "Work", labelBn: "কাজ", href: "#work", icon: Code },
+  { label: "About", labelBn: "পরিচয়", href: "/about", icon: User },
+  { label: "Work", labelBn: "কাজ", href: "/work", icon: Code },
   { label: "Media", labelBn: "মিডিয়া", href: "/media", icon: Tv },
   { label: "Music", labelBn: "সঙ্গীত", href: "#music", icon: Music },
 ];

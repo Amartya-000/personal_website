@@ -12,10 +12,18 @@ interface StickyCursorProps {
 const CURSOR_SIZE = 20;
 const PADDING = 6;
 
+// Position tracks the pointer, so it runs near-critically damped (ζ ≈ 0.96) and
+// stiff — overshoot here reads as lag. Size morphs less often and keeps a
+// softer spring so the hover expansion still feels smooth rather than snapping.
+const POSITION_SPRING = { damping: 36, stiffness: 1400, mass: 0.25 };
+const SIZE_SPRING = { damping: 24, stiffness: 450, mass: 0.4 };
+
 export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCursorProps) {
   const cursorRef = useRef<HTMLDivElement>(null);
   const isHovering = useRef(false);
   const hoveredEl = useRef<HTMLElement | null>(null);
+  // Cached so the mousemove handler never forces a synchronous layout.
+  const hoveredRect = useRef<DOMRect | null>(null);
 
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -23,12 +31,11 @@ export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCurso
   const cursorH = useMotionValue(CURSOR_SIZE);
   const borderRadius = useMotionValue(CURSOR_SIZE / 2);
 
-  const spring = { damping: 20, stiffness: 300, mass: 0.5 };
-  const smoothX = useSpring(mouseX, spring);
-  const smoothY = useSpring(mouseY, spring);
-  const smoothW = useSpring(cursorW, spring);
-  const smoothH = useSpring(cursorH, spring);
-  const smoothRadius = useSpring(borderRadius, spring);
+  const smoothX = useSpring(mouseX, POSITION_SPRING);
+  const smoothY = useSpring(mouseY, POSITION_SPRING);
+  const smoothW = useSpring(cursorW, SIZE_SPRING);
+  const smoothH = useSpring(cursorH, SIZE_SPRING);
+  const smoothRadius = useSpring(borderRadius, SIZE_SPRING);
 
   const getAllElements = useCallback((): HTMLElement[] => {
     const els: HTMLElement[] = [];
@@ -62,8 +69,9 @@ export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCurso
 
   useEffect(() => {
     const onMouseMove = (e: MouseEvent) => {
-      if (isHovering.current && hoveredEl.current) {
-        const rect = hoveredEl.current.getBoundingClientRect();
+      const rect = hoveredRect.current;
+
+      if (isHovering.current && rect) {
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
 
@@ -92,8 +100,9 @@ export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCurso
       isHovering.current = true;
       hoveredEl.current = el;
 
-      // Immediately set dimensions on enter
+      // Measure once on enter; reused for every move while hovering.
       const rect = el.getBoundingClientRect();
+      hoveredRect.current = rect;
       const w = rect.width + PADDING * 2;
       const h = rect.height + PADDING * 2;
       cursorW.set(w);
@@ -104,9 +113,17 @@ export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCurso
     const onLeave = () => {
       isHovering.current = false;
       hoveredEl.current = null;
+      hoveredRect.current = null;
       cursorW.set(CURSOR_SIZE);
       cursorH.set(CURSOR_SIZE);
       borderRadius.set(CURSOR_SIZE / 2);
+    };
+
+    // The cached rect is only stale if the page reflows under a held hover.
+    const remeasure = () => {
+      if (hoveredEl.current) {
+        hoveredRect.current = hoveredEl.current.getBoundingClientRect();
+      }
     };
 
     const elements = getAllElements();
@@ -122,8 +139,14 @@ export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCurso
       });
     }
 
-    window.addEventListener("mousemove", onMouseMove);
-    cleanups.push(() => window.removeEventListener("mousemove", onMouseMove));
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("resize", remeasure);
+    window.addEventListener("scroll", remeasure, { passive: true });
+    cleanups.push(() => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("resize", remeasure);
+      window.removeEventListener("scroll", remeasure);
+    });
 
     return () => {
       for (const fn of cleanups) fn();
@@ -134,11 +157,16 @@ export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCurso
     <motion.div
       ref={cursorRef}
       style={{
-        left: smoothX,
-        top: smoothY,
+        // x/y compile to a transform, which the compositor can handle without
+        // a layout pass. left/top would reflow the page on every frame.
+        left: 0,
+        top: 0,
+        x: smoothX,
+        y: smoothY,
         width: smoothW,
         height: smoothH,
         borderRadius: smoothRadius,
+        willChange: "transform",
       }}
       className="fixed bg-[#4CAF50]/40 pointer-events-none z-[60] hidden md:block mix-blend-screen"
     />
