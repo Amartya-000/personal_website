@@ -12,6 +12,8 @@
   --color-brand-muted: rgba(76, 175, 80, 0.15);
   --font-sans: var(--font-geist);
   --font-serif: var(--font-libre-baskerville);
+  /* Geist for any Latin characters, Noto Sans Bengali for the Bengali script. */
+  --font-bengali: var(--font-geist), var(--font-noto-sans-bengali);
 
   --text-caption: clamp(0.6875rem, 0.66rem + 0.15vw, 0.75rem);
   --text-body: clamp(0.9375rem, 0.85rem + 0.4vw, 1.0625rem);
