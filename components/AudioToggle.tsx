@@ -24,7 +24,7 @@ const AudioToggle = forwardRef<HTMLButtonElement>(function AudioToggle(_, ref) {
         ref={ref}
         onClick={toggleMute}
         aria-label={isMuted ? "Play audio" : "Stop audio"}
-        className="glass rounded-full p-2 md:p-3 relative group transition-colors duration-200 hover:bg-white/5"
+        className="proximity-glow glass rounded-full p-2 md:p-3 relative group transition-colors duration-200 hover:bg-white/5"
       >
         {isPlaying && (
           <span className="absolute inset-0 rounded-full border border-[#4CAF50]/20 animate-ping" />

@@ -56,7 +56,7 @@ const SOCIALS = [
 ];
 
 const NAV_ITEM_CLASS =
-  "px-3 md:px-4 py-1.5 text-caption font-normal text-text-secondary hover:text-brand rounded-full transition-colors duration-200 flex items-center gap-1.5";
+  "proximity-glow relative px-3 md:px-4 py-1.5 text-caption font-normal text-text-secondary hover:text-brand rounded-full transition-colors duration-200 flex items-center gap-1.5";
 
 export default function Navbar() {
   const { isBengali, toggle } = useLang();
@@ -124,7 +124,7 @@ export default function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={social.label}
-            className="p-2 text-text-secondary hover:text-brand rounded-full transition-colors duration-200"
+            className="proximity-glow relative p-2 text-text-secondary hover:text-brand rounded-full transition-colors duration-200"
           >
             {social.icon}
           </a>

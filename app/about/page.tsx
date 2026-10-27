@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import AboutBio from "@/components/AboutBio";
+import AboutBio, { AboutTitle } from "@/components/AboutBio";
 
 export const metadata: Metadata = {
   title: "About — Amartya Bhattacharya",
@@ -14,7 +14,7 @@ export default function AboutPage() {
       <div className="max-w-6xl mx-auto px-6 md:px-16 lg:px-24 pt-[14vh] md:pt-[22vh] pb-32">
         <header className="mb-10 md:mb-20">
           <h1 className="text-title font-normal text-text-primary leading-[1.05] opacity-0 animate-[fadeSlideIn_0.6s_ease_0.1s_forwards]">
-            About
+            <AboutTitle />
           </h1>
           <p className="mt-4 text-body text-text-secondary max-w-xl leading-relaxed opacity-0 animate-[fadeSlideIn_0.6s_ease_0.25s_forwards]">
             A little more on who I am and what I build.

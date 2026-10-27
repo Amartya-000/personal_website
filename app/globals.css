@@ -27,6 +27,27 @@ body {
   color: var(--color-text-primary);
 }
 
+/* Nav icons glow green as the mouse nears them; ProximityGlow sets --glow
+   from 0 (out of range) to 1 (over the icon). The light sits behind each item,
+   brightest in the middle and fading out past its edge, so there's no hard
+   line where it starts and the text and icons on top stay sharp. Items need
+   to be positioned (e.g. `relative`) for it to anchor to them. */
+.proximity-glow::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  z-index: -1;
+  border-radius: 9999px;
+  background: radial-gradient(
+    closest-side,
+    rgb(76 175 80 / 0.38),
+    rgb(76 175 80 / 0.16) 55%,
+    rgb(76 175 80 / 0) 100%
+  );
+  opacity: var(--glow, 0);
+  pointer-events: none;
+}
+
 ::selection {
   background: rgba(76, 175, 80, 0.2);
 }

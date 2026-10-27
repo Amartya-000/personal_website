@@ -37,6 +37,23 @@ const BENGALI: ReactNode[] = [
   "যদি তুই চাকরির জন্য লোক খুঁজছিস আর বাঙালি হোস, আমাকে একটা মেসেজ কর!",
 ];
 
+/** The About page heading, which follows the language toggle like the bio. */
+export function AboutTitle() {
+  const { isBengali } = useLang();
+
+  return (
+    <LangFade inline>
+      {isBengali ? (
+        <span lang="bn" className="font-bengali">
+          পরিচয়
+        </span>
+      ) : (
+        "About"
+      )}
+    </LangFade>
+  );
+}
+
 /** The About page bio, swapped by the logo language toggle. */
 export default function AboutBio() {
   const { isBengali } = useLang();
