@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import type { WorkItem } from "@/lib/work";
+import LangFade from "@/components/LangFade";
+import { useLang } from "@/components/SiteShell";
+import { getWorkCopy, type WorkItem } from "@/lib/work";
 
 interface WorkCardProps {
   item: WorkItem;
@@ -29,11 +31,15 @@ const FRAME_DEFAULT =
 const MotionLink = motion.create(Link);
 
 export default function WorkCard({ item, priority }: WorkCardProps) {
+  const { isBengali } = useLang();
+  const copy = getWorkCopy(item, isBengali);
+
   return (
     <MotionLink
       variants={variants}
       href={`/work/${item.slug}`}
-      aria-label={item.title}
+      aria-label={copy.title}
+      lang={isBengali ? "bn" : undefined}
       className="group block"
     >
       <div
@@ -41,7 +47,7 @@ export default function WorkCard({ item, priority }: WorkCardProps) {
       >
         <Image
           src={item.image}
-          alt={item.imageAlt}
+          alt={copy.imageAlt}
           fill
           priority={priority}
           sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw"
@@ -53,16 +59,16 @@ export default function WorkCard({ item, priority }: WorkCardProps) {
         />
       </div>
 
-      <div className="mt-4 px-1 flex flex-col gap-2">
+      <LangFade className="mt-4 px-1 flex flex-col gap-2">
         <span
           className={`text-caption uppercase tracking-[0.18em] transition-colors duration-300 group-hover:text-brand ${
             item.pinned ? "text-brand/80" : "text-text-muted"
           }`}
         >
-          {item.eyebrow}
+          {copy.eyebrow}
         </span>
         <h2 className="text-body font-medium text-text-primary leading-snug line-clamp-2 flex items-start gap-1.5">
-          <span>{item.title}</span>
+          <span>{copy.title}</span>
           <ArrowRight
             size={14}
             strokeWidth={1.5}
@@ -71,9 +77,9 @@ export default function WorkCard({ item, priority }: WorkCardProps) {
           />
         </h2>
         <p className="text-caption text-text-secondary leading-relaxed line-clamp-2">
-          {item.subtitle}
+          {copy.subtitle}
         </p>
-      </div>
+      </LangFade>
     </MotionLink>
   );
 }

@@ -1,3 +1,7 @@
+"use client";
+
+import LangFade from "@/components/LangFade";
+import { useLang } from "@/components/SiteShell";
 import type { WorkEmbedConfig } from "@/lib/work";
 
 /**
@@ -8,12 +12,14 @@ import type { WorkEmbedConfig } from "@/lib/work";
  * settled, this is the only file that needs to change.
  */
 export default function WorkEmbed({ embed }: { embed?: WorkEmbedConfig }) {
+  const { isBengali } = useLang();
+
   if (!embed) return null;
 
   return (
     <section className="mt-12 md:mt-16">
       <h2 className="text-caption uppercase tracking-[0.18em] text-text-muted mb-4">
-        Live demo
+        <LangFade inline>{isBengali ? "লাইভ ডেমো" : "Live demo"}</LangFade>
       </h2>
       <iframe
         src={embed.src}
