@@ -4,17 +4,19 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import LangFade from "@/components/LangFade";
+import { useLang } from "@/components/SiteShell";
 
 interface NavItem {
   label: string;
+  labelBn: string;
   href: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Work", href: "/work" },
-  { label: "Media", href: "/media" },
+  { label: "Home", labelBn: "হোম", href: "/" },
+  { label: "About", labelBn: "পরিচয়", href: "/about" },
+  { label: "Work", labelBn: "কাজ", href: "/work" },
 ];
 
 const LinkedInIcon = (
@@ -54,6 +56,7 @@ const SOCIALS = [
 ];
 
 export default function MobileNav() {
+  const { isBengali } = useLang();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -127,7 +130,9 @@ export default function MobileNav() {
                       }}
                       className="block py-3 text-[2rem] leading-[1.15] font-[family-name:var(--font-libre-baskerville)] italic text-text-primary"
                     >
-                      {item.label}
+                      <LangFade inline>
+                        {isBengali ? item.labelBn : item.label}
+                      </LangFade>
                     </motion.span>
                   );
                   return (

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { Home, User, Code, Tv, type LucideIcon } from "lucide-react";
+import { Home, User, Code, type LucideIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLang, useNavRefs } from "@/components/SiteShell";
 
@@ -17,7 +17,6 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Home", labelBn: "হোম", href: "/", icon: Home },
   { label: "About", labelBn: "পরিচয়", href: "/about", icon: User },
   { label: "Work", labelBn: "কাজ", href: "/work", icon: Code },
-  { label: "Media", labelBn: "মিডিয়া", href: "/media", icon: Tv },
 ];
 
 const LinkedInIcon = (
