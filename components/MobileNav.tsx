@@ -15,7 +15,6 @@ const NAV_ITEMS: NavItem[] = [
   { label: "About", href: "/about" },
   { label: "Work", href: "/work" },
   { label: "Media", href: "/media" },
-  { label: "Music", href: "#music" },
 ];
 
 const LinkedInIcon = (

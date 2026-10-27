@@ -12,10 +12,11 @@ interface StickyCursorProps {
 const CURSOR_SIZE = 20;
 const PADDING = 6;
 
-// Position tracks the pointer, so it runs near-critically damped (ζ ≈ 0.96) and
-// stiff — overshoot here reads as lag. Size morphs less often and keeps a
-// softer spring so the hover expansion still feels smooth rather than snapping.
-const POSITION_SPRING = { damping: 36, stiffness: 1400, mass: 0.25 };
+// Position tracks the pointer, so it runs near-critically damped (ζ ≈ 0.98) and
+// very stiff (ω ≈ 173 rad/s, settles in ~25ms) — overshoot or drag here reads
+// as lag. Size morphs less often and keeps a softer spring so the hover
+// expansion still feels smooth rather than snapping.
+const POSITION_SPRING = { damping: 34, stiffness: 3000, mass: 0.1 };
 const SIZE_SPRING = { damping: 24, stiffness: 450, mass: 0.4 };
 
 export default function StickyCursor({ navRefs, audioRef, logoRef }: StickyCursorProps) {

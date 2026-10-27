@@ -29,11 +29,14 @@ body {
   background: rgba(76, 175, 80, 0.2);
 }
 
+/* Floating chrome sits over scrolling text, so it carries a mostly-opaque dark
+   fill: content underneath reads as a dim blur instead of ghosting through.
+   Only the standard backdrop-filter is written: the build adds the -webkit-
+   prefix, and declaring both makes Lightning CSS drop the standard one. */
 .glass {
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(10, 11, 10, 0.6);
   backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 *:focus-visible {
