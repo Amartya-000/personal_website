@@ -16,8 +16,9 @@ const ENGLISH: ReactNode[] = [
   "A lot of that started with music. I’ve played percussion since high school, with a special love for concert snare drum and vibraphone, and now dhol. Seeing what a rosewood marimba costs turned into my first research project, a study of cheaper bar materials. I presented it at the Acoustical Society of America, and it’s now accepted for publication in POMA.",
   "When I’m not building, I like to cook, mostly Bengali food, though I’ll happily make just about anything. I also listen to everything from jazz to metal to city pop.",
   <>
-    I’m looking for a 2027 co-op in audio, DSP, embedded systems, or general
-    software engineering. If that sounds like your team, reach out on{" "}
+    I’m looking for a 2027 co-op in software engineering, embedded systems, or
+    machine learning, and I especially like applying them to audio and DSP. If
+    that sounds like your team, reach out on{" "}
     <a
       href="https://www.linkedin.com/in/amartya-bhattacharya007/"
       target="_blank"
