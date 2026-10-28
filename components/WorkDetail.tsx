@@ -3,7 +3,7 @@
 import { Fragment } from "react";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, FileText } from "lucide-react";
 import LangFade from "@/components/LangFade";
 import { useLang } from "@/components/SiteShell";
 import WorkEmbed from "@/components/WorkEmbed";
@@ -201,6 +201,20 @@ export default function WorkDetail({ item }: { item: WorkItem }) {
               </Fragment>
             ))}
           </LangFade>
+
+          {item.paper && (
+            <a
+              href={item.paper}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-10 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-surface-1 px-5 py-2.5 text-body text-text-secondary hover:text-brand hover:border-brand/40 transition-colors duration-200"
+            >
+              <FileText size={15} strokeWidth={1.5} aria-hidden="true" />
+              <LangFade inline>
+                {isBengali ? "পেপারটি পড়ুন (PDF)" : "Read the paper (PDF)"}
+              </LangFade>
+            </a>
+          )}
         </div>
 
         {item.videos && <WorkDemos videos={item.videos} />}

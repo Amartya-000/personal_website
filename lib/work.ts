@@ -66,6 +66,8 @@ export type WorkItem = WorkCopy & {
   extraImages?: WorkImage[];
   /** Demo clips shown below the description, before any extra images. */
   videos?: WorkVideo[];
+  /** Path of a PDF under public/, linked from a button below the description. */
+  paper?: string;
   /** Leads the grid and gets the green glow treatment. */
   pinned?: boolean;
   /** Live, running example. Left undefined until an embed exists. */
@@ -162,6 +164,7 @@ const ITEMS: WorkItem[] = [
     impact:
       "Presented at the Acoustical Society of America, accepted for publication in POMA, and covered on NPR.",
     image: marimbaSetup,
+    paper: "/work/marimba-research/Bhattacharya_POMA_Marimba.pdf",
     imageAlt:
       "Tap-response recording setup: a sample bar hung on twine inside an open box, with a microphone beside it",
     body: [
