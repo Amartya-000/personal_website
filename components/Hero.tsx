@@ -40,13 +40,13 @@ export default function Hero() {
             </span>
             <span className="relative inline-block text-display font-[family-name:var(--font-libre-baskerville)] italic leading-[0.95]">
               <span className="relative text-text-primary">
-                {isBengali ? "অমৃত্য" : "Amartya"}
+                {isBengali ? "অমর্ত্য" : "Amartya"}
               </span>
               <span
                 aria-hidden="true"
                 className="absolute inset-0 amartya-shine select-none"
               >
-                {isBengali ? "অমৃত্য" : "Amartya"}
+                {isBengali ? "অমর্ত্য" : "Amartya"}
               </span>
             </span>
           </motion.h1>

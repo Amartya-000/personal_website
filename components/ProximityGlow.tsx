@@ -3,7 +3,6 @@
 import { useEffect, type RefObject } from "react";
 
 interface ProximityGlowProps {
-  navRefs: RefObject<(HTMLElement | null)[]>;
   audioRef: RefObject<HTMLElement | null>;
   logoRef: RefObject<HTMLElement | null>;
 }
@@ -23,18 +22,18 @@ const EMPHASIS = 2;
 const SOFTEN = 16;
 
 /**
- * Sets --glow on each nav icon by how close the mouse is: 1 over the icon,
- * falling to 0 at RADIUS, with the closest icon emphasized. The
+ * Sets --glow on the logo and audio button by how close the mouse is: 1 over
+ * the icon, falling to 0 at RADIUS, with the closest icon emphasized. The
  * .proximity-glow rule in globals.css turns it into a green glow.
  */
-export default function ProximityGlow({ navRefs, audioRef, logoRef }: ProximityGlowProps) {
+export default function ProximityGlow({ audioRef, logoRef }: ProximityGlowProps) {
   useEffect(() => {
     let frame = 0;
     let pointer: { x: number; y: number } | null = null;
 
     const update = () => {
       frame = 0;
-      const els = [...navRefs.current, audioRef.current, logoRef.current].filter(
+      const els = [audioRef.current, logoRef.current].filter(
         (el): el is HTMLElement => el !== null,
       );
 
@@ -91,7 +90,7 @@ export default function ProximityGlow({ navRefs, audioRef, logoRef }: ProximityG
       root.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("blur", onLeave);
     };
-  }, [navRefs, audioRef, logoRef]);
+  }, [audioRef, logoRef]);
 
   return null;
 }

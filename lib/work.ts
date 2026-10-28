@@ -36,6 +36,8 @@ export type WorkCopy = {
   title: string;
   /** One-line blurb shown on the card. */
   subtitle: string;
+  /** One key result, set apart in a callout on the detail page and featured card. */
+  impact: string;
   imageAlt: string;
   /** Paragraphs of the description shown on the detail page. */
   body: WorkParagraph[];
@@ -63,6 +65,8 @@ const ITEMS: WorkItem[] = [
     eyebrow: "Featured project",
     title: "Wave-Tilter",
     subtitle: "A waveform generator you control by tilting it.",
+    impact:
+      "Verified on an oscilloscope, then put to work testing a real RC low-pass filter with a cutoff around 1.6 kHz.",
     image: waveTilterScope,
     imageAlt: "Wave-Tilter running on an M5Stack Cardputer",
     pinned: true,
@@ -75,6 +79,8 @@ const ITEMS: WorkItem[] = [
       eyebrow: "ফিচার্ড প্রজেক্ট",
       title: "Wave-Tilter",
       subtitle: "একটা ওয়েভফর্ম জেনারেটর, যেটা কাত করে নিয়ন্ত্রণ করা যায়।",
+      impact:
+        "অসিলোস্কোপে যাচাই করা, তারপর প্রায় ১.৬ kHz কাটঅফের একটা সত্যিকারের RC লো-পাস ফিল্টার পরীক্ষায় কাজে লাগানো।",
       imageAlt: "M5Stack Cardputer-এ চলছে Wave-Tilter",
       body: [
         "Wave-Tilter একটা M5Stack Cardputer ADV-কে সিগন্যাল জেনারেটরে বদলে দেয়, যেটা চলে এর IMU দিয়ে। শুরুতে থাকে একটা ট্রায়াঙ্গল ওয়েভ। সামনে বা পেছনে কাত করলে আকারটা স্কোয়ারের দিকে (ট্রায়াঙ্গলকে খাড়া করে আর ক্লিপ করে) অথবা সাইনের দিকে বদলে যায়। বাঁয়ে বা ডানে কাত করলে পিচ নিচে বা ওপরে সরে যায়। পিচ রেট-কন্ট্রোলড, তাই যতক্ষণ কাত করে রাখবেন ততক্ষণ পিচ সরতেই থাকবে, আর একটা কি চাপলে Bb5 রেফারেন্সের চারপাশে সেমিটোনে স্ন্যাপ করা চালু বা বন্ধ হয়।",
@@ -89,6 +95,8 @@ const ITEMS: WorkItem[] = [
     title: "solo-soloing",
     subtitle:
       "Jazz backing tracks on demand: Claude procedurally generates the Strudel code, then music theory checks catch its mistakes.",
+    impact:
+      "Every track has to pass nine music theory checks, and a failed check goes back to the stage that can fix it.",
     image: soloSoloingTitle,
     imageAlt:
       "Solo-Soloing: Not everyone has a band to play with all the time. This is your chance to practice soloing while solo.",
@@ -108,6 +116,8 @@ const ITEMS: WorkItem[] = [
       title: "solo-soloing",
       subtitle:
         "চাহিদামতো জ্যাজ ব্যাকিং ট্র্যাক: Claude প্রসিডিউরালি Strudel কোড তৈরি করে, তারপর মিউজিক থিওরির চেক তার ভুল ধরে।",
+      impact:
+        "প্রতিটা ট্র্যাককে মিউজিক থিওরির নয়টা চেক পেরোতে হয়, আর কোনো চেক ফেল করলে সেটা সেই ধাপে ফেরত যায় যেটা ভুলটা ঠিক করতে পারে।",
       imageAlt:
         "Solo-Soloing: সবার তো সবসময় একসঙ্গে বাজানোর ব্যান্ড থাকে না। একা থেকেও সোলো প্র্যাকটিস করার সুযোগ এটাই।",
       body: [
@@ -122,6 +132,8 @@ const ITEMS: WorkItem[] = [
     title: "Toward a sustainable and accessible marimba",
     subtitle:
       "Screening 17 everyday materials as cheaper, more sustainable stand-ins for Honduran rosewood.",
+    impact:
+      "Presented at the Acoustical Society of America, accepted for publication in POMA, and covered on NPR.",
     image: marimbaSetup,
     imageAlt:
       "Tap-response recording setup: a sample bar hung on twine inside an open box, with a microphone beside it",
@@ -152,6 +164,8 @@ const ITEMS: WorkItem[] = [
       title: "টেকসই ও সহজলভ্য মারিম্বার পথে",
       subtitle:
         "হন্ডুরান রোজউডের সস্তা ও আরও টেকসই বিকল্প হিসেবে ১৭টি সাধারণ উপাদান যাচাই।",
+      impact:
+        "Acoustical Society of America-তে উপস্থাপিত, POMA-তে প্রকাশের জন্য গৃহীত, আর NPR-এ এ নিয়ে প্রতিবেদন হয়েছে।",
       imageAlt:
         "ট্যাপ-রেসপন্স রেকর্ডিংয়ের সেটআপ: খোলা বাক্সের ভেতরে সুতোয় ঝোলানো একটা নমুনা বার, পাশে একটা মাইক্রোফোন",
       body: [
@@ -184,6 +198,8 @@ const ITEMS: WorkItem[] = [
     title: "analog EKG",
     subtitle:
       "A heartbeat pulled out of millivolts at the skin, with three stages of analog circuitry.",
+    impact:
+      "Turns a 1–3 mV signal at the skin into a readable heartbeat, running on AA batteries, with heart rate estimated in MATLAB.",
     image: ekgBreadboard,
     imageAlt: "analog EKG circuit",
     extraImages: [
@@ -202,6 +218,8 @@ const ITEMS: WorkItem[] = [
       title: "অ্যানালগ ইসিজি",
       subtitle:
         "ত্বকের কয়েক মিলিভোল্ট সংকেত থেকে হৃৎস্পন্দন বের করে আনা, তিন ধাপের অ্যানালগ সার্কিট দিয়ে।",
+      impact:
+        "ত্বকের ১–৩ mV সংকেতকে পড়ার মতো হৃৎস্পন্দনে পরিণত করে, চলে AA ব্যাটারিতে, আর MATLAB-এ হার্ট রেট আন্দাজ করা হয়।",
       imageAlt: "অ্যানালগ ইসিজি সার্কিট",
       body: [
         "Circuits and Signals (EECE 2150) কোর্সে এক সহপাঠীর সঙ্গে এটা বানিয়েছিলাম। একটা AD627 ইনস্ট্রুমেন্টেশন অ্যামপ্লিফায়ার ইলেকট্রোড থেকে ১–৩ mV সংকেত নেয়, কমন-মোড নয়েজ বাদ দেয়, আর পুরো গেইনটা (প্রায় ৯৬) দেয়। এর পরে আছে দুটো ইউনিটি-গেইন অ্যাক্টিভ ফিল্টার। ০.৪০ Hz-এর একটা হাই-পাস ত্বকে লাগানো ইলেকট্রোডে আসা DC অফসেট সরিয়ে দেয়, আর ১৫.৯ Hz-এর একটা লো-পাস নয়েজ পরিষ্কার করে, যদিও তাতে QRS কমপ্লেক্সের সবচেয়ে তীক্ষ্ণ অংশটা একটু গোল হয়ে যায়। পুরো সার্কিট চলে AA ব্যাটারির ±১.৫ V-এ।",
@@ -214,6 +232,8 @@ const ITEMS: WorkItem[] = [
     eyebrow: "Game",
     title: "SPACE-RACING",
     subtitle: "An arcade game of laser targets and keypad interruptions.",
+    impact:
+      "Three I2C sensors on a single Raspberry Pi Pico register every laser hit, while a keypad interrupts play mid-round.",
     image: spaceRacingCabinet,
     imageAlt: "SPACE-RACING arcade game",
     extraImages: [
@@ -231,6 +251,8 @@ const ITEMS: WorkItem[] = [
       eyebrow: "গেম",
       title: "SPACE-RACING",
       subtitle: "লেজার টার্গেট আর কিপ্যাডের বাধা নিয়ে একটা আর্কেড গেম।",
+      impact:
+        "একটা Raspberry Pi Pico-তে তিনটে I2C সেন্সর প্রতিটা লেজার হিট ধরে ফেলে, আর খেলার মাঝপথে কিপ্যাড বাধা দেয়।",
       imageAlt: "SPACE-RACING আর্কেড গেম",
       body: [
         "২০২৫ সালের ফল সেমিস্টারে Cornerstone of Engineering কোর্সের জন্য এটা বানিয়েছিলাম। ইন্ডিকেটর লাইট খেলোয়াড়কে জানায় তিনটে টার্গেটের কোনটায় লেজার মারতে হবে, আর তিনটে I2C সেন্সর, যেগুলো একটা Raspberry Pi Pico পড়ে, প্রতিটা হিট ধরে ফেলে। দ্বিতীয় একটা সাবসিস্টেম, একটা LCD আর কিপ্যাড, স্কোর আর বাকি সময়ের হিসাব রাখে। খেলার মাঝে এটা একটা কোডও দেখায়, যেটা টাইপ না করা পর্যন্ত খেলা আর এগোয় না।",
@@ -243,6 +265,8 @@ const ITEMS: WorkItem[] = [
     eyebrow: "Embedded systems",
     title: "Escape room puzzle",
     subtitle: "Mix colors with buttons, then scan keycards in the right order.",
+    impact:
+      "Relative thresholds tuned from real readings let the color sensor tell blue keycards from green ones.",
     image: puzzleBox,
     imageAlt: "Escape room puzzle box",
     body: [
@@ -254,6 +278,8 @@ const ITEMS: WorkItem[] = [
       title: "এস্কেপ রুম ধাঁধা",
       subtitle:
         "বোতাম টিপে রং মেশান, তারপর ঠিক ক্রমে কি-কার্ড স্ক্যান করুন।",
+      impact:
+        "আসল রিডিং দেখে ঠিক করা আপেক্ষিক থ্রেশহোল্ডের জন্য কালার সেন্সর নীল আর সবুজ কি-কার্ড আলাদা করে চিনতে পারে।",
       imageAlt: "এস্কেপ রুমের ধাঁধার বাক্স",
       body: [
         "Cornerstone of Engineering 2 (২০২৬ সালের স্প্রিং সেমিস্টার) কোর্সে পুরো ক্লাস মিলে বানানো একটা এস্কেপ রুমের জন্য এটা ছিল আমাদের দলের ধাঁধা, প্রথম আর দ্বিতীয় ঘরের মাঝখানে রাখা। এটা বসানো আছে একটা কাঠের সিকিউরিটি বাক্সে, সঙ্গে 3D-প্রিন্ট করা কিপ্যাডের খোল আর একটা LCD। প্রথমে খেলোয়াড়রা চারটে রঙিন বোতাম একসঙ্গে টিপে নতুন রং মেশায় (লাল আর নীল মিলে বেগুনি), কমলা, বেগুনি আর গোলাপি পেরিয়ে একটা কোড পায়। তারপর একটা কালার সেন্সরের সামনে দিয়ে ক্রমানুসারে (লাল, সবুজ, নীল) তিনটে রঙিন কি-কার্ড স্ক্যান করে দ্বিতীয় কোডটা খোলে।",

@@ -27,7 +27,7 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Nav icons glow green as the mouse nears them; ProximityGlow sets --glow
+/* The logo and audio button glow green as the mouse nears them; ProximityGlow sets --glow
    from 0 (out of range) to 1 (over the icon). The light sits behind each item,
    brightest in the middle and fading out past its edge, so there's no hard
    line where it starts and the text and icons on top stay sharp. Items need

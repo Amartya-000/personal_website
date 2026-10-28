@@ -7,13 +7,18 @@ import { ArrowLeft } from "lucide-react";
 import LangFade from "@/components/LangFade";
 import { useLang } from "@/components/SiteShell";
 import WorkEmbed from "@/components/WorkEmbed";
+import WorkImpact from "@/components/WorkImpact";
 import { getWorkCopy, type WorkItem, type WorkParagraph } from "@/lib/work";
 
 const FIGURE_SIZES = "(min-width:768px) 768px, 100vw";
 
+/** The tallest a figure gets, as width / height. */
+const MIN_FIGURE_RATIO = 4 / 5;
+
 /**
- * An image shown uncropped at its own aspect ratio. Width is capped so a
- * portrait photo never runs taller than most of the viewport.
+ * An image shown at its own aspect ratio, spanning the text column so its
+ * edges line up with the text. A portrait photo taller than 4:5 is cropped
+ * top and bottom so it doesn't run far past the viewport.
  */
 function WorkFigure({
   src,
@@ -26,14 +31,11 @@ function WorkFigure({
   priority?: boolean;
   className?: string;
 }) {
-  const ratio = src.width / src.height;
-
   return (
     <div
-      className={`relative w-full mx-auto rounded-2xl overflow-hidden bg-surface-2 border border-white/[0.06] ${className}`}
+      className={`relative w-full rounded-2xl overflow-hidden bg-surface-2 border border-white/[0.06] ${className}`}
       style={{
-        aspectRatio: `${src.width} / ${src.height}`,
-        maxWidth: `min(100%, calc(75vh * ${ratio}))`,
+        aspectRatio: Math.max(src.width / src.height, MIN_FIGURE_RATIO),
       }}
     >
       <Image
@@ -45,6 +47,28 @@ function WorkFigure({
         className="object-cover"
       />
     </div>
+  );
+}
+
+/**
+ * A paragraph's first sentence and the rest. A sentence ends at ., !, ? or
+ * the Bengali dari (।) followed by a space, so "1.6 kHz" doesn't end one.
+ */
+const FIRST_SENTENCE = /^(.+?[.!?।])\s+([\s\S]+)$/;
+
+/** The opening paragraph, with its first sentence brought up to white. */
+function Lede({ paragraph }: { paragraph: WorkParagraph }) {
+  // Paragraphs with links aren't split; none open a case study so far.
+  if (typeof paragraph !== "string") return <Paragraph paragraph={paragraph} />;
+
+  const match = paragraph.match(FIRST_SENTENCE);
+  const [first, rest] = match ? [match[1], match[2]] : [paragraph, ""];
+
+  return (
+    <>
+      <span className="text-text-primary">{first}</span>
+      {rest && ` ${rest}`}
+    </>
   );
 }
 
@@ -119,9 +143,16 @@ export default function WorkDetail({ item }: { item: WorkItem }) {
         <div className="mt-10 md:mt-12 opacity-0 animate-[fadeSlideIn_0.6s_ease_0.4s_forwards]">
           <LangFade className="flex flex-col gap-5">
             {copy.body.map((paragraph, i) => (
-              <p key={i} className="text-body text-text-secondary leading-relaxed">
-                <Paragraph paragraph={paragraph} />
-              </p>
+              <Fragment key={i}>
+                <p className="text-body text-text-secondary leading-relaxed">
+                  {i === 0 ? (
+                    <Lede paragraph={paragraph} />
+                  ) : (
+                    <Paragraph paragraph={paragraph} />
+                  )}
+                </p>
+                {i === 0 && <WorkImpact text={copy.impact} className="my-2" />}
+              </Fragment>
             ))}
           </LangFade>
         </div>

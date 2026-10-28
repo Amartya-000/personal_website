@@ -27,7 +27,6 @@ type LangContextValue = {
 };
 
 type NavRefsContextValue = {
-  navRefs: RefObject<(HTMLElement | null)[]>;
   logoRef: RefObject<HTMLButtonElement | null>;
 };
 
@@ -51,10 +50,9 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
   const toggle = useCallback(() => setIsBengali((v) => !v), []);
   const langValue = useMemo(() => ({ isBengali, toggle }), [isBengali, toggle]);
 
-  const navRefs = useRef<(HTMLElement | null)[]>([]);
   const logoRef = useRef<HTMLButtonElement | null>(null);
   const audioButtonRef = useRef<HTMLButtonElement>(null);
-  const navRefsValue = useMemo(() => ({ navRefs, logoRef }), []);
+  const navRefsValue = useMemo(() => ({ logoRef }), []);
 
   return (
     <LangContext.Provider value={langValue}>
@@ -68,11 +66,7 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
           <Navbar />
           <MobileNav />
           <AudioToggle ref={audioButtonRef} />
-          <ProximityGlow
-            navRefs={navRefs}
-            audioRef={audioButtonRef}
-            logoRef={logoRef}
-          />
+          <ProximityGlow audioRef={audioButtonRef} logoRef={logoRef} />
         </AudioProvider>
       </NavRefsContext.Provider>
     </LangContext.Provider>

@@ -18,14 +18,6 @@ export default function WorkPage() {
           >
             <LangText en="Work" bn="কাজ" />
           </h1>
-          <p
-            className="mt-4 text-body text-text-secondary max-w-xl leading-relaxed opacity-0 animate-[fadeSlideIn_0.6s_ease_0.25s_forwards]"
-          >
-            <LangText
-              en="Selected projects and engineering work."
-              bn="বাছাই করা কিছু প্রজেক্ট আর ইঞ্জিনিয়ারিংয়ের কাজ।"
-            />
-          </p>
         </header>
 
         <WorkGrid items={WORK_ITEMS} />
