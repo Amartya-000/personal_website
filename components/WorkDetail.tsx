@@ -8,7 +8,12 @@ import LangFade from "@/components/LangFade";
 import { useLang } from "@/components/SiteShell";
 import WorkEmbed from "@/components/WorkEmbed";
 import WorkImpact from "@/components/WorkImpact";
-import { getWorkCopy, type WorkItem, type WorkParagraph } from "@/lib/work";
+import {
+  getWorkCopy,
+  type WorkItem,
+  type WorkParagraph,
+  type WorkVideo,
+} from "@/lib/work";
 
 const FIGURE_SIZES = "(min-width:768px) 768px, 100vw";
 
@@ -47,6 +52,47 @@ function WorkFigure({
         className="object-cover"
       />
     </div>
+  );
+}
+
+/**
+ * Demo clips, two to a row from small screens up so portrait phone video
+ * doesn't run past the viewport. Nothing plays or downloads until pressed.
+ */
+function WorkDemos({ videos }: { videos: WorkVideo[] }) {
+  const { isBengali } = useLang();
+
+  return (
+    <section className="mt-12 md:mt-16 opacity-0 animate-[fadeSlideIn_0.6s_ease_0.5s_forwards]">
+      {/* Letter spacing would break the line along the top of Bengali letters. */}
+      <h2
+        className={`mb-4 text-caption text-text-muted ${
+          isBengali ? "" : "uppercase tracking-[0.18em]"
+        }`}
+      >
+        <LangFade inline>{isBengali ? "ডেমো" : "Demos"}</LangFade>
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {videos.map((video) => (
+          <figure key={video.src}>
+            <video
+              src={video.src}
+              poster={video.poster.src}
+              controls
+              playsInline
+              preload="none"
+              className="w-full rounded-2xl bg-surface-2 border border-white/[0.06]"
+              style={{
+                aspectRatio: `${video.poster.width} / ${video.poster.height}`,
+              }}
+            />
+            <figcaption className="mt-3 px-1 text-caption text-text-secondary leading-relaxed">
+              <LangFade>{isBengali ? video.captionBn : video.caption}</LangFade>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -156,6 +202,8 @@ export default function WorkDetail({ item }: { item: WorkItem }) {
             ))}
           </LangFade>
         </div>
+
+        {item.videos && <WorkDemos videos={item.videos} />}
 
         {item.extraImages && (
           <div className="mt-10 md:mt-12 flex flex-col gap-6 opacity-0 animate-[fadeSlideIn_0.6s_ease_0.5s_forwards]">

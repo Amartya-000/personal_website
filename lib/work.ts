@@ -8,6 +8,8 @@ import spaceRacingWiring from "@/public/work/space-racing/wiring.jpg";
 import puzzleBox from "@/public/work/escape-room-puzzle/puzzle-box.jpg";
 import marimbaSetup from "@/public/work/marimba-research/recording-setup.jpg";
 import waveTilterScope from "@/public/work/wave-tilter/oscilloscope.jpg";
+import waveTilterTiltingPoster from "@/public/work/wave-tilter/tilting-poster.jpg";
+import waveTilterFilterPoster from "@/public/work/wave-tilter/filter-test-poster.jpg";
 
 export type WorkEmbedConfig = {
   /** URL of the running example to embed. */
@@ -22,6 +24,15 @@ export type WorkImage = {
   src: StaticImageData;
   alt: string;
   altBn: string;
+};
+
+export type WorkVideo = {
+  /** Path of the file under public/, e.g. "/work/wave-tilter/tilting.mp4". */
+  src: string;
+  /** A frame from the video, statically imported so the player knows its aspect ratio. */
+  poster: StaticImageData;
+  caption: string;
+  captionBn: string;
 };
 
 /** A run of paragraph text, or an inline link. */
@@ -53,6 +64,8 @@ export type WorkItem = WorkCopy & {
   imageMode?: "cover" | "logo";
   /** Secondary images shown below the description. */
   extraImages?: WorkImage[];
+  /** Demo clips shown below the description, before any extra images. */
+  videos?: WorkVideo[];
   /** Leads the grid and gets the green glow treatment. */
   pinned?: boolean;
   /** Live, running example. Left undefined until an embed exists. */
@@ -70,6 +83,20 @@ const ITEMS: WorkItem[] = [
     image: waveTilterScope,
     imageAlt: "Wave-Tilter running on an M5Stack Cardputer",
     pinned: true,
+    videos: [
+      {
+        src: "/work/wave-tilter/tilting.mp4",
+        poster: waveTilterTiltingPoster,
+        caption: "Tilting Wave-Tilter while an oscilloscope tracks the output.",
+        captionBn: "Wave-Tilter কাত করা হচ্ছে, আর অসিলোস্কোপে আউটপুট দেখা যাচ্ছে।",
+      },
+      {
+        src: "/work/wave-tilter/filter-test.mp4",
+        poster: waveTilterFilterPoster,
+        caption: "Testing an RC low-pass filter, with the output on an oscilloscope.",
+        captionBn: "একটা RC লো-পাস ফিল্টার পরীক্ষা, আউটপুট অসিলোস্কোপে।",
+      },
+    ],
     body: [
       "Wave-Tilter turns an M5Stack Cardputer ADV into a signal generator controlled by its IMU. It starts on a triangle wave. Tilting it forward or back morphs the shape toward a square (by steepening and clipping the triangle) or toward a sine. Tilting left or right slides the pitch down or up. Pitch is rate-controlled, so it keeps gliding as long as you hold the tilt, and a key toggles snapping to semitones around a Bb5 reference.",
       "Audio is generated at 48 kHz. I capped output frequency at 4 kHz on the assumption that the signal would come out of the GPIO pins. Partway through, I realized I could clip leads straight onto the 3.5 mm headphone jack and use the existing audio output, which turned out to be the simpler path. The display refreshes at 100 Hz. Work is split across the ESP32's two cores, one generating audio and one drawing the screen, so visuals never interrupt the sound. I wrote it in C++, partly to learn the language before my Embedded Systems class got to it.",
