@@ -14,7 +14,6 @@ import Navbar from "@/components/Navbar";
 import MobileNav from "@/components/MobileNav";
 import Logo from "@/components/Logo";
 import AudioProvider from "@/components/AudioProvider";
-import AudioToggle from "@/components/AudioToggle";
 import ProximityGlow from "@/components/ProximityGlow";
 
 const GodRaysBackground = dynamic(() => import("@/components/GodRaysBackground"), {
@@ -65,7 +64,6 @@ export default function SiteShell({ children }: { children: React.ReactNode }) {
           <Logo />
           <Navbar />
           <MobileNav />
-          <AudioToggle ref={audioButtonRef} />
           <ProximityGlow audioRef={audioButtonRef} logoRef={logoRef} />
         </AudioProvider>
       </NavRefsContext.Provider>
