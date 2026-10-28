@@ -30,7 +30,7 @@ export default function AboutPage() {
               className="mt-10 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-surface-1 px-5 py-2.5 text-body text-text-secondary hover:text-brand hover:border-brand/40 transition-colors duration-200"
             >
               <Download size={15} strokeWidth={1.5} aria-hidden="true" />
-              <LangText en="Download résumé" bn="রেজ্যুমে ডাউনলোড" />
+              <LangText en="Download resume" bn="রেজ্যুমে ডাউনলোড" />
             </a>
           </div>
 
