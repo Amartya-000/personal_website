@@ -346,7 +346,7 @@ const ITEMS: WorkItem[] = [
       },
     ],
     body: [
-      "I built this for Cornerstone of Engineering in fall 2025. Indicator lights tell the player which of three targets to hit with a laser, and three I2C sensors read by a Raspberry Pi Pico register each hit. A second subsystem, an LCD and keypad, tracks score and time remaining. It also interrupts play with a code the player has to punch in before the game continues.",
+      "This was built as part of my Cornerstone of Engineering class's arcade in fall 2025. Indicator lights tell the player which of three targets to hit with a laser, and three I2C sensors read by a Raspberry Pi Pico register each hit. A second subsystem, an LCD and keypad, tracks score and time remaining. It also interrupts play with a code the player has to punch in before the game continues.",
       "It's written in MicroPython. Most of the work was in sensor thresholding, timing, and interrupt-driven transitions between game states.",
     ],
     bn: {
@@ -357,7 +357,7 @@ const ITEMS: WorkItem[] = [
         "একটা Raspberry Pi Pico-তে তিনটে I2C সেন্সর প্রতিটা লেজার হিট ধরে ফেলে, আর খেলার মাঝপথে কিপ্যাড বাধা দেয়।",
       imageAlt: "SPACE-RACING আর্কেড গেম",
       body: [
-        "২০২৫ সালের ফল সেমিস্টারে Cornerstone of Engineering কোর্সের জন্য এটা বানিয়েছিলাম। ইন্ডিকেটর লাইট খেলোয়াড়কে জানায় তিনটে টার্গেটের কোনটায় লেজার মারতে হবে, আর তিনটে I2C সেন্সর, যেগুলো একটা Raspberry Pi Pico পড়ে, প্রতিটা হিট ধরে ফেলে। দ্বিতীয় একটা সাবসিস্টেম, একটা LCD আর কিপ্যাড, স্কোর আর বাকি সময়ের হিসাব রাখে। খেলার মাঝে এটা একটা কোডও দেখায়, যেটা টাইপ না করা পর্যন্ত খেলা আর এগোয় না।",
+        "২০২৫ সালের ফল সেমিস্টারে আমার Cornerstone of Engineering ক্লাসের আর্কেডের অংশ হিসেবে এটা বানানো হয়েছিল। ইন্ডিকেটর লাইট খেলোয়াড়কে জানায় তিনটে টার্গেটের কোনটায় লেজার মারতে হবে, আর তিনটে I2C সেন্সর, যেগুলো একটা Raspberry Pi Pico পড়ে, প্রতিটা হিট ধরে ফেলে। দ্বিতীয় একটা সাবসিস্টেম, একটা LCD আর কিপ্যাড, স্কোর আর বাকি সময়ের হিসাব রাখে। খেলার মাঝে এটা একটা কোডও দেখায়, যেটা টাইপ না করা পর্যন্ত খেলা আর এগোয় না।",
         "এটা MicroPython-এ লেখা। বেশিরভাগ কাজ ছিল সেন্সরের থ্রেশহোল্ড ঠিক করা, টাইমিং, আর গেমের এক অবস্থা থেকে আরেক অবস্থায় ইন্টারাপ্ট-চালিত বদল নিয়ে।",
       ],
     },
