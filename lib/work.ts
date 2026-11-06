@@ -10,6 +10,8 @@ import marimbaSetup from "@/public/work/marimba-research/recording-setup.jpg";
 import waveTilterScope from "@/public/work/wave-tilter/oscilloscope.jpg";
 import waveTilterTiltingPoster from "@/public/work/wave-tilter/tilting-poster.jpg";
 import waveTilterFilterPoster from "@/public/work/wave-tilter/filter-test-poster.jpg";
+import queBaileConfusion from "@/public/work/que-baile/confusion-matrix.png";
+import queBaileAccuracy from "@/public/work/que-baile/validation-accuracy.png";
 
 export type WorkEmbedConfig = {
   /** URL of the running example to embed. */
@@ -115,6 +117,76 @@ const ITEMS: WorkItem[] = [
         "Wave-Tilter একটা M5Stack Cardputer ADV-কে সিগন্যাল জেনারেটরে বদলে দেয়, যেটা চলে এর IMU দিয়ে। শুরুতে থাকে একটা ট্রায়াঙ্গল ওয়েভ। সামনে বা পেছনে কাত করলে আকারটা স্কোয়ারের দিকে (ট্রায়াঙ্গলকে খাড়া করে আর ক্লিপ করে) অথবা সাইনের দিকে বদলে যায়। বাঁয়ে বা ডানে কাত করলে পিচ নিচে বা ওপরে সরে যায়। পিচ রেট-কন্ট্রোলড, তাই যতক্ষণ কাত করে রাখবেন ততক্ষণ পিচ সরতেই থাকবে, আর একটা কি চাপলে Bb5 রেফারেন্সের চারপাশে সেমিটোনে স্ন্যাপ করা চালু বা বন্ধ হয়।",
         "অডিও তৈরি হয় ৪৮ kHz-এ। প্রথমে ধরে নিয়েছিলাম সিগন্যাল GPIO পিন দিয়ে বেরোবে, তাই আউটপুট ফ্রিকোয়েন্সি ৪ kHz-এ বেঁধে দিয়েছিলাম। মাঝপথে বুঝলাম, ৩.৫ mm হেডফোন জ্যাকে সরাসরি লিড ক্লিপ করে আগে থেকে থাকা অডিও আউটপুটই ব্যবহার করা যায়, আর সেটাই সহজ পথ হয়ে দাঁড়াল। ডিসপ্লে রিফ্রেশ হয় ১০০ Hz-এ। কাজ ভাগ করা আছে ESP32-এর দুটো কোরে, একটা অডিও তৈরি করে আর একটা স্ক্রিন আঁকে, তাই ছবির জন্য শব্দে কখনো বাধা পড়ে না। এটা আমি C++-এ লিখেছি, খানিকটা এই জন্য যে আমার Embedded Systems ক্লাসে ভাষাটা আসার আগেই শিখে নিতে চেয়েছিলাম।",
         "অসিলোস্কোপে ওয়েভফর্মগুলো যাচাই করেছি, তারপর Wave-Tilter দিয়ে প্রায় ১.৬ kHz কাটঅফের একটা RC লো-পাস ফিল্টার পরীক্ষা করেছি (১ kΩ, মাল্টিমিটারে নিশ্চিত করা)। আপাতত এটা ল্যাবের যন্ত্রের চেয়ে বাদ্যযন্ত্রই বেশি, তবে লক্ষ্য হলো ফিল্টার চটপট পরীক্ষা করার জন্য একটা পকেট জেনারেটর।",
+      ],
+    },
+  },
+  {
+    slug: "que-baile",
+    eyebrow: "Audio machine learning",
+    title: "Que Baile",
+    subtitle:
+      "Telling bachata, cumbia, merengue, and salsa apart from their spectrograms.",
+    impact:
+      "A first-pass model got 76 of 81 validation songs right (93.8%), and every miss was a cumbia song.",
+    image: queBaileConfusion,
+    imageAlt:
+      "Confusion matrix for the first-pass model: every bachata, salsa, and merengue song classified correctly, and 10 of 15 cumbia songs",
+    extraImages: [
+      {
+        src: queBaileAccuracy,
+        alt: "Validation accuracy over 20 training epochs, for whole songs and for 4-second clips. The saved model, from epoch 9, scored 93.8% on whole songs.",
+        altBn:
+          "২০ ইপক ট্রেনিং জুড়ে ভ্যালিডেশন অ্যাকুরেসি, পুরো গান আর ৪ সেকেন্ডের ক্লিপ ধরে। ইপক ৯-এর সেভ করা মডেলটা পুরো গানে ৯৩.৮% পেয়েছে।",
+      },
+    ],
+    body: [
+      "Que Baile is a PyTorch classifier that listens to a song and names its Latin dance genre: bachata, cumbia, merengue, or salsa. These four are hard to tell apart. They share instruments, overlap in tempo, and are mostly sung in Spanish, so the difference comes down to rhythm and a few signature instruments. The model turns audio into spectrograms and classifies them like images. Eventually, I want to test it live with Northeastern’s Kaliente dance team and run it on an embedded device.",
+      [
+        "I got the idea from ",
+        {
+          text: "a Dance Dojo video",
+          href: "https://www.youtube.com/watch?v=2GLpG1bT76w",
+        },
+        " on telling salsa, bachata, merengue, and cumbia apart by ear. I’d also been listening to a lot of cumbia lately, mostly from ",
+        {
+          text: "my own playlist",
+          href: "https://open.spotify.com/playlist/72NSFvFfvXsNez3NcQtFZf",
+        },
+        ".",
+      ],
+      "Most of the work so far has gone into the data. I started with classic YouTube playlists for each genre, downloaded as MP3s into one folder per genre so the folder name serves as the label. Choosing “classic” playlists gave clearly representative examples, at the cost of skewing toward older recordings and production styles. A second-pass review with Claude Code checked that songs were in the right folders, removed ones that were clearly out of place, and cut duplicates. That shrank the dataset a lot.",
+      "To rebuild it, I pulled Spotify playlists: my own cumbia playlist, pruned by hand, and Spotify’s curated classic-genre playlists. Before downloading any playlist, I shuffled it and listened to about 10 songs, then had Claude flag tracks that didn’t fit. A final Claude Code pass removed crossovers, like pop-leaning tracks or ones drifting toward reggaeton. That left about 100 to 170 songs per genre, so I’m adjusting class weights in training to even out the imbalance.",
+      "For the first training run, I described what I wanted and had Claude Code write the training code, so I could quickly check the dataset’s quality and find its mistakes. The 60,836-parameter model trained for 20 epochs. Its best checkpoint got 76 of 81 validation songs right (93.8%) and 88.3% of individual clips. Every bachata, salsa, and merengue song was classified correctly. Cumbia was the weak spot: 10 of 15 right, with 3 of the misses called salsa.",
+      "This pass was about checking the data, not writing the final model. Next, I’m rewriting the training code by hand, with this run as the baseline to compare against.",
+    ],
+    bn: {
+      eyebrow: "অডিও মেশিন লার্নিং",
+      title: "Que Baile",
+      subtitle:
+        "স্পেকট্রোগ্রাম দেখে বাচাটা, কুম্বিয়া, মেরেঙ্গে আর সালসা আলাদা করে চেনা।",
+      impact:
+        "প্রথম মডেলটা ভ্যালিডেশনের ৮১টা গানের মধ্যে ৭৬টা ঠিক চিনেছে (৯৩.৮%), আর যে কটা ভুল হয়েছে সবই কুম্বিয়ার গান।",
+      imageAlt:
+        "প্রথম মডেলের কনফিউশন ম্যাট্রিক্স: বাচাটা, সালসা আর মেরেঙ্গের প্রতিটা গান ঠিক চেনা গেছে, আর কুম্বিয়ার ১৫টার মধ্যে ১০টা",
+      body: [
+        "Que Baile একটা PyTorch ক্লাসিফায়ার, যেটা একটা গান শুনে বলে দেয় সেটা কোন ল্যাটিন নাচের ধারা: বাচাটা, কুম্বিয়া, মেরেঙ্গে না সালসা। এই চারটে আলাদা করা কঠিন। এদের বাদ্যযন্ত্র অনেকটা এক, টেম্পো একটা আরেকটার সঙ্গে মিলে যায়, আর বেশিরভাগ গানই স্প্যানিশে গাওয়া, তাই পার্থক্যটা আসে মূলত ছন্দ আর কয়েকটা বিশেষ বাদ্যযন্ত্র থেকে। মডেলটা অডিওকে স্পেকট্রোগ্রামে বদলে ছবির মতো করে শ্রেণিবিভাগ করে। একদিন এটা নর্থইস্টার্নের Kaliente ডান্স টিমের সঙ্গে লাইভ পরীক্ষা করতে চাই, আর একটা এমবেডেড ডিভাইসে চালাতে চাই।",
+        [
+          "আইডিয়াটা মাথায় এসেছিল ",
+          {
+            text: "Dance Dojo-র একটা ভিডিও",
+            href: "https://www.youtube.com/watch?v=2GLpG1bT76w",
+          },
+          " দেখে, যেখানে কানে শুনে সালসা, বাচাটা, মেরেঙ্গে আর কুম্বিয়া আলাদা করে চেনা শেখানো হয়। তাছাড়া ইদানীং অনেক কুম্বিয়া শুনছিলাম, বেশিরভাগটাই ",
+          {
+            text: "আমার নিজের প্লেলিস্ট",
+            href: "https://open.spotify.com/playlist/72NSFvFfvXsNez3NcQtFZf",
+          },
+          " থেকে।",
+        ],
+        "এখন পর্যন্ত বেশিরভাগ কাজ গেছে ডেটায়। শুরু করেছিলাম প্রতিটা ধারার ক্লাসিক YouTube প্লেলিস্ট দিয়ে, MP3 হিসেবে ডাউনলোড করে প্রতিটা ধারার জন্য আলাদা ফোল্ডারে রেখে, যাতে ফোল্ডারের নামটাই লেবেল হয়। “ক্লাসিক” প্লেলিস্ট বেছে নেওয়ায় প্রতিটা ধারার স্পষ্ট উদাহরণ পেয়েছি, তবে ডেটাসেট পুরনো রেকর্ডিং আর প্রোডাকশনের দিকে খানিকটা হেলে আছে। তারপর Claude Code দিয়ে দ্বিতীয়বার যাচাই করিয়েছি: গানগুলো ঠিক ফোল্ডারে আছে কি না দেখা, স্পষ্টতই বেমানান গান বাদ দেওয়া, আর ডুপ্লিকেট সরানো। তাতে ডেটাসেট অনেকটা ছোট হয়ে যায়।",
+        "আবার বড় করতে Spotify প্লেলিস্ট নিয়েছি: আমার নিজের কুম্বিয়া প্লেলিস্ট, হাতে ছেঁটে নেওয়া, আর Spotify-র নিজের বাছাই করা ক্লাসিক-ধারার প্লেলিস্ট। কোনো প্লেলিস্ট ডাউনলোড করার আগে শাফল করে প্রায় ১০টা গান শুনেছি, তারপর Claude-কে দিয়ে বেমানান ট্র্যাক চিহ্নিত করিয়েছি। শেষে Claude Code দিয়ে আরেকবার ছেঁকে ক্রসওভার বাদ দিয়েছি, যেমন পপ-ঘেঁষা গান বা রেগেটনের দিকে সরে যাওয়া গান। তাতে প্রতিটা ধারায় প্রায় ১০০ থেকে ১৭০টা গান থাকে, তাই এই অসমতা সামলাতে ট্রেনিংয়ে ক্লাসগুলোর ওজন সমন্বয় করছি।",
+        "প্রথম ট্রেনিং রানের জন্য, আমি কী চাই সেটা বর্ণনা করে Claude Code-কে দিয়ে ট্রেনিং কোড লিখিয়েছি, যাতে চটপট ডেটাসেটের মান যাচাই করে ভুলগুলো খুঁজে পাই। ৬০,৮৩৬ প্যারামিটারের মডেলটা ২০ ইপক ধরে ট্রেন হয়েছে। এর সেরা চেকপয়েন্ট ভ্যালিডেশনের ৮১টা গানের মধ্যে ৭৬টা (৯৩.৮%) আর আলাদা আলাদা ক্লিপের ৮৮.৩% ঠিক চিনেছে। বাচাটা, সালসা আর মেরেঙ্গের প্রতিটা গান ঠিকঠাক চেনা গেছে। দুর্বল জায়গা ছিল কুম্বিয়া: ১৫টার মধ্যে ১০টা ঠিক, আর ভুলগুলোর ৩টাকে সালসা ভেবেছে।",
+        "এই ধাপের উদ্দেশ্য ছিল ডেটা যাচাই করা, চূড়ান্ত মডেল লেখা নয়। এরপর ট্রেনিং কোডটা নিজের হাতে আবার লিখছি, আর এই রানটাকেই তুলনার বেসলাইন হিসেবে রাখছি।",
       ],
     },
   },
